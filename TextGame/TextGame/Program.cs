@@ -22,12 +22,16 @@ namespace TextGame
             // from this point on player pos is here and not in map 
             var playerPos = LocationHelper.GetFirstObjectFromMap<PlayerStartObject>(map);
             var player = new Player((PlayerStartObject)map[playerPos.XAxis, playerPos.YAxis]);
-  
-            PlayGame(level, player);
 
+            while (true)
+            {
+                var next = PlayGame(level, player);
+                if (next == "exit") { return; }
+                level = AllLevels.FirstOrDefault(f => f.Name.ToLower() == next);
+            }
         }
 
-        static void PlayGame(LevelDto level, Player player)
+        static string PlayGame(LevelDto level, Player player)
         {
             var map = level.Map;
 
@@ -65,7 +69,7 @@ namespace TextGame
                 {
                     var customob = (MapExitObject)getAroundMe.AllAround[1, 1];
 
-                    PlayGame(AllLevels.FirstOrDefault(f => f.Name.ToLower() == customob.GOTO), player);
+                    return customob.GOTO;
                 }
 
                 clear = true;
@@ -138,6 +142,8 @@ namespace TextGame
                 clear = false;
                 Console.WriteLine($"Can Not do that");
             }
+
+            return "";
         }
     }
 }
