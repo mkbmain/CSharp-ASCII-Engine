@@ -1,13 +1,15 @@
 
-var:
-x = wall
+var|
+█ = wall
 p = player
+y = key
+z = door
+e = exit = two
 
-
-map:two
-xxxxxxxxxxx
-xPxxxxx   x
-xxxxxxxkx x
-x xxxxxxx xxx
-x         d x
-xxxxxxxxxxxxx
+map|
+███████████
+█p█████   █
+█ █████y█ █
+█ ███████ ███
+█ █       ze█
+█████████████

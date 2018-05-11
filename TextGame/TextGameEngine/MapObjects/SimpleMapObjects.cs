@@ -28,9 +28,16 @@
 
     public class MapExitObject : MapObjectBase
     {
-        public MapExitObject(char? customMapchar = null) : base(customMapchar)
+        public override string ToString()
+        {
+            return MapChar?.ToString() ?? "#";
+        }
+
+        public string GOTO { get; set; }
+        public MapExitObject(char? customMapchar = null,string go = "") : base(customMapchar)
         {
             CanStandOn = true;
+            GOTO = go;
         }
     }
 

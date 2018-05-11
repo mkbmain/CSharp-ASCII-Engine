@@ -74,7 +74,8 @@ namespace TextGameEngine.Map
                         lookUp.Add(c, new PlayerStartObject());
                         break;
                     case "exit":
-                        lookUp.Add(c, new WallObject('e'));  // TODO BIGGIE
+                        if(start.Length < 3) { throw new Exception("Exit setup with no goto");}
+                        lookUp.Add(c, new MapExitObject('e'){ GOTO = start[2].Trim()});  // TODO BIGGIE
                         break;
                     default:
                         if (customLookup.TryGetValue(ob, out var mapob)) { lookUp.Add(c, mapob); }
