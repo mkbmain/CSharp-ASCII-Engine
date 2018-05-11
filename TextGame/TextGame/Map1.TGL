@@ -1,0 +1,18 @@
+ob|
+key = {"Name":"key","Message":"You found a Key","AddItemId":1,"RequiresItemId":null,"MapChar":"*","CanStandOn":true}
+door = {"Name":"LockedDoor","Message":"the door disapaers as you walk through","AddItemId":null,"RequiresItemId":1,"MapChar":"¬","CanStandOn":true}
+
+var|
+x = wall
+p = player
+k = key
+d = door
+e = exit = two
+
+map|
+xxxxxxxxxxx
+xpxxxxx   x
+x xxxxxkx x
+x xxxxxxx xxx
+x         dex
+xxxxxxxxxxxxx

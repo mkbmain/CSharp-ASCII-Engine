@@ -12,7 +12,7 @@ namespace TextGameEngine.IO
         {
 
             return Directory.GetFiles(string.IsNullOrWhiteSpace(path) ? Environment.CurrentDirectory : path)
-                 .Where(f => f.EndsWith(".TGM"))
+                 .Where(f => f.EndsWith(".TGL"))
                  .ToDictionary(f => f.Replace(Environment.CurrentDirectory, "").Substring(1), f => f);
         }
     }

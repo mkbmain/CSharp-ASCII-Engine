@@ -1,54 +1,91 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TextGameEngine.MapObjects
+﻿namespace TextGameEngine.MapObjects
 {
+    public class MapCustomObject : MapObjectBase
+    {
+        public string Name { get; set; }
+
+        public string Message { get; set; }
+        public int? AddItemId { get; set; }
+
+        public int? RequiresItemId { get; set; }
+
+        public override string ToString()
+        {
+            return MapChar?.ToString() ?? " ";
+        }
+
+        public MapCustomObject(bool canStandOn = true, string name = "", string message = "", char? customMapchar = null,
+            int? additemId = null, int? requiresItemId = null) : base(customMapchar)
+        {
+            RequiresItemId = requiresItemId;
+            Name = name;
+            Message = message;
+            CanStandOn = canStandOn;
+            AddItemId = additemId;
+
+        }
+    }
+
     public class MapExitObject : MapObjectBase
     {
-        public MapExitObject()
+        public MapExitObject(char? customMapchar = null) : base(customMapchar)
         {
             CanStandOn = true;
         }
     }
+
     public class WallObject : MapObjectBase
     {
         public override string ToString()
         {
-            return "█";
+            return MapChar?.ToString() ?? "█";
         }
-        public WallObject()
+
+        public WallObject(char? customMapchar = null) : base(customMapchar)
         {
             CanStandOn = false;
+            MapChar = customMapchar;
         }
     }
-    public class PlayerMapObject : MapObjectBase
+
+    public class PlayerStartObject : MapObjectBase
     {
         public override string ToString()
         {
-            return "º";
+            return MapChar?.ToString() ?? "º";
         }
-        public PlayerMapObject()
+
+        public PlayerStartObject(char? customMapchar = null) : base(customMapchar)
         {
             CanStandOn = true;
+
         }
     }
+
     public class FloorMapObject : MapObjectBase
     {
         public override string ToString()
         {
-            return " ";
+            return MapChar?.ToString() ?? " ";
         }
-        public FloorMapObject()
+
+        public FloorMapObject(char? customMapchar = ' ') : base(customMapchar)
         {
             CanStandOn = true;
+
         }
     }
+
     public class MapObjectBase
     {
+        public MapObjectBase(char? customMapchar)
+        {
+            MapChar = customMapchar;
+        }
+
+        public char? MapChar { get; set; }
         public bool CanStandOn { get; set; }
 
     }
 
-    
 }

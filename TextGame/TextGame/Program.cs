@@ -1,27 +1,24 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using TextGameEngine.Location;
 using TextGameEngine.MapObjects;
+using TextGameEngine.PlayerModel;
 
 namespace TextGame
 {
     class Program
     {
-
-
         static void Main()
         {
-            var mapFiles = TextGameEngine.IO.IOHelpers.GetMapFiles();
 
-
-            var map = TextGameEngine.Map.MapBuilder.GetLevel(File.ReadAllText(mapFiles.FirstOrDefault().Value));
-
+            var allLevels = TextGameEngine.Map.MapBuilder.GetAllLevels();
+            var level = allLevels.FirstOrDefault();
+            var map = level.Map;
             var input = "";
             // from this point on player pos is here and not in map 
-            var playerPos = LocationHelper.GetFirstObjectFromMap<PlayerMapObject>(map);
-            var player = map[playerPos.XAxis, playerPos.YAxis];
+            var playerPos = LocationHelper.GetFirstObjectFromMap<PlayerStartObject>(map);
+            var player = new Player((PlayerStartObject) map[playerPos.XAxis, playerPos.YAxis]);
             map[playerPos.XAxis, playerPos.YAxis] = new FloorMapObject();
 
             var clear = true;
@@ -34,7 +31,7 @@ namespace TextGame
                     Console.Clear();
                     Console.WriteLine($"-----");
                     Console.WriteLine($"|{getAroundMe.AllAround[0,0]}{getAroundMe.AllAround[1, 0]}{ getAroundMe.AllAround[2, 0]}|");
-                    Console.WriteLine($"|{getAroundMe.AllAround[0, 1]}{player}{ getAroundMe.AllAround[2, 1]}|");
+                    Console.WriteLine($"|{getAroundMe.AllAround[0, 1]}{player.StartOb}{ getAroundMe.AllAround[2, 1]}|");
                     Console.WriteLine($"|{getAroundMe.AllAround[0, 2]}{getAroundMe.AllAround[1, 2]}{ getAroundMe.AllAround[2, 2]}|");
                     Console.WriteLine($"-----");
                 }

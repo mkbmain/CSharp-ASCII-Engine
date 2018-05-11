@@ -1,0 +1,13 @@
+
+var:
+x = wall
+p = player
+
+
+map:two
+xxxxxxxxxxx
+xPxxxxx   x
+xxxxxxxkx x
+x xxxxxxx xxx
+x         d x
+xxxxxxxxxxxxx
