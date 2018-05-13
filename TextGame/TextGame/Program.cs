@@ -21,8 +21,10 @@ namespace TextGame
 
             // from this point on player pos is here and not in map 
             var playerPos = LocationHelper.GetFirstObjectFromMap<PlayerStartObject>(map);
-            var player = new Player((PlayerStartObject)map[playerPos.XAxis, playerPos.YAxis]);
-
+            var player = new Player((PlayerStartObject) map[playerPos.XAxis, playerPos.YAxis])
+            {
+                StartOb = (PlayerStartObject) map[playerPos.XAxis, playerPos.YAxis]
+            };
             while (true)
             {
                 var next = PlayGame(level, player);
@@ -36,9 +38,13 @@ namespace TextGame
             var map = level.Map;
 
             // from this point on player pos is here and not in map 
-            var playerPos = LocationHelper.GetFirstObjectFromMap<PlayerStartObject>(map);
-            player.StartOb = (PlayerStartObject)map[playerPos.XAxis, playerPos.YAxis];
-            map[playerPos.XAxis, playerPos.YAxis] = new FloorMapObject();
+            var playerPos = level.LastPlayerPos ?? LocationHelper.GetFirstObjectFromMap<PlayerStartObject>(map);
+            level.LastPlayerPos = new Positon();
+            if (map[playerPos.XAxis, playerPos.YAxis].GetType() == typeof(PlayerStartObject))
+            {
+                map[playerPos.XAxis, playerPos.YAxis] = new FloorMapObject();
+            }
+        
 
 
             var input = "";
@@ -68,10 +74,11 @@ namespace TextGame
                 if (getAroundMe.AllAround[1, 1].GetType() == typeof(MapExitObject))
                 {
                     var customob = (MapExitObject)getAroundMe.AllAround[1, 1];
-
+ 
                     return customob.GOTO;
                 }
-
+                level.LastPlayerPos.XAxis = playerPos.XAxis;
+                level.LastPlayerPos.YAxis = playerPos.YAxis;
                 clear = true;
 
                 var inventory = player.Inventory.Select(x => x.Name).Aggregate("", (a, b) => $"{a},{b}");

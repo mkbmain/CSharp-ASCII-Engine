@@ -5,11 +5,11 @@ p = player
 y = key
 z = door
 e = exit = two
-
+x = exit = Map1.TGL
 map|
 ███████████
-█p█████   █
-█ █████y█ █
+█x█████   █
+█p█████y█ █
 █ ███████ ███
 █ █       ze█
 █████████████
