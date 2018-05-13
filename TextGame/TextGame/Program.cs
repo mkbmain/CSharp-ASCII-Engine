@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using TextGameEngine.Location;
 using TextGameEngine.MapObjects;
@@ -10,12 +8,18 @@ namespace TextGame
 {
     internal static class Program
     {
-        static IEnumerable<LevelDto> AllLevels { get; set; }
+        static LevelDto[] AllLevels { get; set; }
 
         static void Main()
         {
-            AllLevels = TextGameEngine.Map.MapBuilder.GetAllLevels();
+            AllLevels = TextGameEngine.Map.MapBuilder.GetAllLevels().ToArray();
+
             var level = AllLevels.FirstOrDefault();
+            if (level == null)
+            {
+                Console.WriteLine("No Levels Detected");
+                return;
+            }
             var map = level.Map;
 
             // from this point on player pos is here and not in map 
@@ -27,11 +31,6 @@ namespace TextGame
             while (true)
             {
                 var next = PlayGame(level, player);
-                if (next == "exit")
-                {
-                    return;
-                }
-
                 level = AllLevels.FirstOrDefault(f => f.Name.ToLower() == next);
             }
         }
@@ -104,6 +103,9 @@ namespace TextGame
                 var movePos = new Positon {XAxis = 0, YAxis = 0};
                 switch (input)
                 {
+                    case "exit":
+                       Environment.Exit(1);
+                        break;    
                     case "up":
                     case "u":
                         moveToPoint = getAroundMe.Up;
