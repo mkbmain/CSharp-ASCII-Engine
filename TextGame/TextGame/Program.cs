@@ -105,38 +105,43 @@ namespace TextGame
                 switch (input)
                 {
                     case "up":
+                    case "u":
                         moveToPoint = getAroundMe.Up;
                         movePos.YAxis = -1;
                         break;
                     case "down":
+                    case "d":
                         moveToPoint = getAroundMe.Down;
                         movePos.YAxis = 1;
                         break;
                     case "left":
+                    case "l":
                         moveToPoint = getAroundMe.Left;
                         movePos.XAxis = -1;
                         break;
                     case "right":
+                    case "r":
                         moveToPoint = getAroundMe.Right;
                         movePos.XAxis = 1;
                         break;
                 }
 
-                if (moveToPoint != null &&
-                    moveToPoint.CanStandOn)
+                // ok i admit this is a lot of conditions 
+                // essentially it can't be null and it can be stood on
+                if (moveToPoint != null && moveToPoint.CanStandOn &&
+                    // its not a custom object
+                    (moveToPoint.GetType() != typeof(MapCustomObject) ||
+                     // if it is a custom object does not need a item
+                     ((MapCustomObject) moveToPoint).RequiresItemId == null ||
+                     // if it is a custom object and needs a item we have it in player inv
+                     player.Inventory.Select(x => x.Id).Contains((int) ((MapCustomObject) moveToPoint).RequiresItemId)))
                 {
-                    if (moveToPoint.GetType() != typeof(MapCustomObject) ||
-                        ((MapCustomObject) moveToPoint).RequiresItemId == null ||
-                        player.Inventory.Select(x => x.Id)
-                            .Contains((int) ((MapCustomObject) moveToPoint).RequiresItemId))
-                    {
-                        playerPos.XAxis += movePos.XAxis;
-                        playerPos.YAxis += movePos.YAxis;
-                    }
-
-                    clear = false;
-                    Console.WriteLine($"Can Not do that");
+                    playerPos.XAxis += movePos.XAxis;
+                    playerPos.YAxis += movePos.YAxis;
                 }
+
+                clear = false;
+                Console.WriteLine($"Can Not do that");
             }
 
             return "";
