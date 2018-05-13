@@ -7,11 +7,11 @@ var|
 p = player
 y = key
 z = door
-e = exit = Map2.TGL
+□ = exit = Map2.TGL
 map|
 ███████████
 █ █████   █
 █ █████ █ █
 █ ███████y███
-█        pze█
+█        pz□█
 █████████████
