@@ -138,6 +138,7 @@ namespace TextGame
                 {
                     playerPos.XAxis += movePos.XAxis;
                     playerPos.YAxis += movePos.YAxis;
+                    continue;
                 }
 
                 clear = false;
