@@ -8,13 +8,12 @@ using TextGameEngine.PlayerModel;
 
 namespace TextGame
 {
-    class Program
+    internal static class Program
     {
-        public static IEnumerable<LevelDto> AllLevels { get; set; }
+        static IEnumerable<LevelDto> AllLevels { get; set; }
 
         static void Main()
         {
-
             AllLevels = TextGameEngine.Map.MapBuilder.GetAllLevels();
             var level = AllLevels.FirstOrDefault();
             var map = level.Map;
@@ -28,7 +27,11 @@ namespace TextGame
             while (true)
             {
                 var next = PlayGame(level, player);
-                if (next == "exit") { return; }
+                if (next == "exit")
+                {
+                    return;
+                }
+
                 level = AllLevels.FirstOrDefault(f => f.Name.ToLower() == next);
             }
         }
@@ -44,39 +47,49 @@ namespace TextGame
             {
                 map[playerPos.XAxis, playerPos.YAxis] = new FloorMapObject();
             }
-        
 
 
             var input = "";
             var clear = true;
             while (input.ToLower() != "exit")
             {
-                var getAroundMe = TextGameEngine.Location.LocationHelper.GetWhatsAroundPosition(playerPos, map);
+                var getAroundMe = LocationHelper.GetWhatsAroundPosition(playerPos, map);
 
                 if (clear)
                 {
                     Console.Clear();
                     Console.WriteLine($"-----");
-                    Console.WriteLine($"|{getAroundMe.AllAround[0, 0]}{getAroundMe.AllAround[1, 0]}{ getAroundMe.AllAround[2, 0]}|");
-                    Console.WriteLine($"|{getAroundMe.AllAround[0, 1]}{player.StartOb}{ getAroundMe.AllAround[2, 1]}|");
-                    Console.WriteLine($"|{getAroundMe.AllAround[0, 2]}{getAroundMe.AllAround[1, 2]}{ getAroundMe.AllAround[2, 2]}|");
+                    Console.WriteLine(
+                        $"|{getAroundMe.AllAround[0, 0]}{getAroundMe.AllAround[1, 0]}{getAroundMe.AllAround[2, 0]}|");
+                    Console.WriteLine($"|{getAroundMe.AllAround[0, 1]}{player.StartOb}{getAroundMe.AllAround[2, 1]}|");
+                    Console.WriteLine(
+                        $"|{getAroundMe.AllAround[0, 2]}{getAroundMe.AllAround[1, 2]}{getAroundMe.AllAround[2, 2]}|");
                     Console.WriteLine($"-----");
                 }
+
                 if (getAroundMe.AllAround[1, 1].GetType() == typeof(MapCustomObject))
                 {
-                    var customob = (MapCustomObject)getAroundMe.AllAround[1, 1];
-                    if (!string.IsNullOrWhiteSpace(customob.Message)) { Console.WriteLine(customob.Message); }
-                    if (customob.AddItemId != null) { player.Inventory.Add(new InventoryItem { Id = (int)customob.AddItemId, Name = customob.Name }); }
+                    var customob = (MapCustomObject) getAroundMe.AllAround[1, 1];
+                    if (!string.IsNullOrWhiteSpace(customob.Message))
+                    {
+                        Console.WriteLine(customob.Message);
+                    }
+
+                    if (customob.AddItemId != null)
+                    {
+                        player.Inventory.Add(new InventoryItem {Id = (int) customob.AddItemId, Name = customob.Name});
+                    }
 
                     level.Map[playerPos.XAxis, playerPos.YAxis] = new FloorMapObject();
                 }
 
                 if (getAroundMe.AllAround[1, 1].GetType() == typeof(MapExitObject))
                 {
-                    var customob = (MapExitObject)getAroundMe.AllAround[1, 1];
- 
+                    var customob = (MapExitObject) getAroundMe.AllAround[1, 1];
+
                     return customob.GOTO;
                 }
+
                 level.LastPlayerPos.XAxis = playerPos.XAxis;
                 level.LastPlayerPos.YAxis = playerPos.YAxis;
                 clear = true;
@@ -87,67 +100,43 @@ namespace TextGame
                 input = Console.ReadLine();
 
                 input = input?.ToLower();
-                if (input == "up" && getAroundMe.Up.CanStandOn)
+                MapObjectBase moveToPoint = null;
+                var movePos = new Positon {XAxis = 0, YAxis = 0};
+                switch (input)
                 {
-                    if (getAroundMe.Up.GetType() != typeof(MapCustomObject) || ((MapCustomObject)getAroundMe.Up).RequiresItemId == null)
-                    {
-                        playerPos.YAxis = playerPos.YAxis - 1;
-                        continue;
-                    }
-
-                    if (player.Inventory.Select(x => x.Id).Contains((int)((MapCustomObject)getAroundMe.Up).RequiresItemId))
-                    {
-                        playerPos.YAxis = playerPos.YAxis - 1;
-                        continue;
-                    }
-
-
-                }
-                else if (input == "down" && getAroundMe.Down.CanStandOn)
-                {
-                    if (getAroundMe.Down.GetType() != typeof(MapCustomObject) || ((MapCustomObject)getAroundMe.Down).RequiresItemId == null)
-                    {
-                        playerPos.YAxis = playerPos.YAxis + 1;
-                        continue;
-                    }
-
-                    if (player.Inventory.Select(x => x.Id).Contains((int)((MapCustomObject)getAroundMe.Down).RequiresItemId))
-                    {
-                        playerPos.YAxis = playerPos.YAxis + 1;
-                        continue;
-                    }
-                }
-                else if (input == "left" && getAroundMe.Left.CanStandOn)
-                {
-                    if (getAroundMe.Left.GetType() != typeof(MapCustomObject) || ((MapCustomObject)getAroundMe.Left).RequiresItemId == null)
-                    {
-                        playerPos.XAxis = playerPos.XAxis - 1;
-                        continue;
-                    }
-
-                    if (player.Inventory.Select(x => x.Id).Contains((int)((MapCustomObject)getAroundMe.Left).RequiresItemId))
-                    {
-                        playerPos.XAxis = playerPos.XAxis - 1;
-                        continue;
-                    }
-                }
-                else if (input == "right" && getAroundMe.Right.CanStandOn)
-                {
-                    if (getAroundMe.Right.GetType() != typeof(MapCustomObject) || ((MapCustomObject)getAroundMe.Right).RequiresItemId == null)
-                    {
-                        playerPos.XAxis = playerPos.XAxis + 1;
-                        continue;
-                    }
-
-                    if (player.Inventory.Select(x => x.Id).Contains((int)((MapCustomObject)getAroundMe.Right).RequiresItemId))
-                    {
-                        playerPos.XAxis = playerPos.XAxis + 1;
-                        continue;
-                    }
+                    case "up":
+                        moveToPoint = getAroundMe.Up;
+                        movePos.YAxis = -1;
+                        break;
+                    case "down":
+                        moveToPoint = getAroundMe.Down;
+                        movePos.YAxis = 1;
+                        break;
+                    case "left":
+                        moveToPoint = getAroundMe.Left;
+                        movePos.XAxis = -1;
+                        break;
+                    case "right":
+                        moveToPoint = getAroundMe.Right;
+                        movePos.XAxis = 1;
+                        break;
                 }
 
-                clear = false;
-                Console.WriteLine($"Can Not do that");
+                if (moveToPoint != null &&
+                    moveToPoint.CanStandOn)
+                {
+                    if (moveToPoint.GetType() != typeof(MapCustomObject) ||
+                        ((MapCustomObject) moveToPoint).RequiresItemId == null ||
+                        player.Inventory.Select(x => x.Id)
+                            .Contains((int) ((MapCustomObject) moveToPoint).RequiresItemId))
+                    {
+                        playerPos.XAxis += movePos.XAxis;
+                        playerPos.YAxis += movePos.YAxis;
+                    }
+
+                    clear = false;
+                    Console.WriteLine($"Can Not do that");
+                }
             }
 
             return "";
