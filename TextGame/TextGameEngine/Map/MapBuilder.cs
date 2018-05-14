@@ -7,15 +7,17 @@ using TextGameEngine.MapObjects;
 
 namespace TextGameEngine.Map
 {
-
-    public class MapBuilder
+    /// <summary>
+    /// Map builder this is incharge of getting and mapping map and vars from tgl files
+    /// </summary>
+    public static class MapBuilder
     {
         private static MapObjectBase[,] GetMap(IEnumerable<string> mapFileLines, IReadOnlyDictionary<char, MapObjectBase> lookup)
         {
             var mapFile = GetFileParts("map|", mapFileLines);
             var lines = mapFile.Split('\n');
             var height = lines.Length;
-            var maxWidth = lines.OrderByDescending(x => x.Length).FirstOrDefault().Length;
+            var maxWidth = lines.Select(x=>x.Length).OrderByDescending(x => x).FirstOrDefault();
 
             var outval = new MapObjectBase[maxWidth, height];
             var yAxis = 0;
@@ -32,7 +34,6 @@ namespace TextGameEngine.Map
 
                 yAxis++;
             }
-
             return outval;
         }
 
@@ -85,7 +86,6 @@ namespace TextGameEngine.Map
             return lookUp;
         }
 
-
         private static string GetFileParts(string startsWith, IEnumerable<string> mapFileLines)
         {
             var output = "";
@@ -103,17 +103,14 @@ namespace TextGameEngine.Map
 
         public static IEnumerable<LevelDto> GetAllLevels(string path = null)
         {
-            var allMap = TextGameEngine.IO.IOHelpers.GetMapFiles(path);
+            var allMap = IO.IOHelpers.GetMapFiles(path);
             var list = new List<LevelDto>();
             foreach (var f in allMap)
             {
                 list.Add(GetLevel(f.Value, f.Key));
             }
-
             return list;
         }
-
-
 
         private static LevelDto GetLevel(string filePath, string name = null)
         {
@@ -124,11 +121,8 @@ namespace TextGameEngine.Map
             return new LevelDto
             {
                 Map = GetMap(fileLines, lookup),
-                Name = name ?? filePath.Split(Path.DirectorySeparatorChar).LastOrDefault().Replace("TGM", "")
+                Name = name ?? filePath.Split(Path.DirectorySeparatorChar).LastOrDefault()?.Replace("TGM", "")
             };
         }
-
-
-
     }
 }
