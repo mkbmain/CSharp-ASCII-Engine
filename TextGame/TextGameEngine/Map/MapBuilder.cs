@@ -82,7 +82,6 @@ namespace TextGameEngine.Map
                         break;
                 }
             }
-
             return lookUp;
         }
 
