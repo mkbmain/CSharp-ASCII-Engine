@@ -262,6 +262,4 @@ paket-files/
 # WinMerge
 *.bak
 
-# Capital On Tap
-/siem_spa.capitalontap.com
-/PublicApi/PublicApi.xml
+
