@@ -76,7 +76,7 @@ namespace TextGameEngine.Map
                         break;
                     case "exit":
                         if(start.Length < 3) { throw new Exception("Exit setup with no goto");}
-                        lookUp.Add(c, new MapExitObject('□'){ GOTO = start[2].Trim()});  // TODO BIGGIE
+                        lookUp.Add(c, new MapExitObject('□'){ GoToLevel = start[2].Trim()});  // TODO BIGGIE
                         break;
                     default:
                         if (customLookup.TryGetValue(ob, out var mapob)) { lookUp.Add(c, mapob); }
@@ -101,10 +101,10 @@ namespace TextGameEngine.Map
             return output;
         }
 
-        public static IEnumerable<LevelDto> GetAllLevels(string path = null)
+        public static IEnumerable<LevelModel> GetAllLevels(string path = null)
         {
             var allMap = IO.IOHelpers.GetMapFiles(path);
-            var list = new List<LevelDto>();
+            var list = new List<LevelModel>();
             foreach (var f in allMap)
             {
                 list.Add(GetLevel(f.Value, f.Key));
@@ -112,13 +112,13 @@ namespace TextGameEngine.Map
             return list;
         }
 
-        private static LevelDto GetLevel(string filePath, string name = null)
+        private static LevelModel GetLevel(string filePath, string name = null)
         {
             var fileLines = File.ReadAllLines(filePath);
             var customObjects = GetObjects(fileLines);
             var lookup = GetKeyLookUp(customObjects, fileLines);
 
-            return new LevelDto
+            return new LevelModel
             {
                 Map = GetMap(fileLines, lookup),
                 Name = name ?? filePath.Split(Path.DirectorySeparatorChar).LastOrDefault()?.Replace("TGM", "")

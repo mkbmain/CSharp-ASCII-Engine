@@ -1,30 +1,6 @@
 ﻿namespace TextGameEngine.MapObjects
 {
-    public class MapCustomObject : MapObjectBase
-    {
-        public string Name { get; set; }
 
-        public string Message { get; set; }
-        public int? AddItemId { get; set; }
-
-        public int? RequiresItemId { get; set; }
-
-        public override string ToString()
-        {
-            return MapChar?.ToString() ?? " ";
-        }
-
-        public MapCustomObject(bool canStandOn = true, string name = "", string message = "", char? customMapchar = null,
-            int? additemId = null, int? requiresItemId = null) : base(customMapchar)
-        {
-            RequiresItemId = requiresItemId;
-            Name = name;
-            Message = message;
-            CanStandOn = canStandOn;
-            AddItemId = additemId;
-
-        }
-    }
 
     public class MapExitObject : MapObjectBase
     {
@@ -33,11 +9,11 @@
             return MapChar?.ToString() ?? "#";
         }
 
-        public string GOTO { get; set; }
+        public string GoToLevel { get; set; }
         public MapExitObject(char? customMapchar = null,string go = "") : base(customMapchar)
         {
             CanStandOn = true;
-            GOTO = go;
+            GoToLevel = go;
         }
     }
 
@@ -82,17 +58,4 @@
 
         }
     }
-
-    public class MapObjectBase
-    {
-        public MapObjectBase(char? customMapchar)
-        {
-            MapChar = customMapchar;
-        }
-
-        public char? MapChar { get; set; }
-        public bool CanStandOn { get; set; }
-
-    }
-
 }

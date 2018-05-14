@@ -8,7 +8,7 @@ namespace TextGame
 {
     internal static class Program
     {
-        static LevelDto[] AllLevels { get; set; }
+        static LevelModel[] AllLevels { get; set; }
 
         static void Main()
         {
@@ -35,7 +35,7 @@ namespace TextGame
             }
         }
 
-        static string PlayGame(LevelDto level, Player player)
+        static string PlayGame(LevelModel level, Player player)
         {
             var map = level.Map;
 
@@ -86,7 +86,7 @@ namespace TextGame
                 {
                     var customob = (MapExitObject) getAroundMe.AllAround[1, 1];
 
-                    return customob.GOTO;
+                    return customob.GoToLevel;
                 }
 
                 level.LastPlayerPos.XAxis = playerPos.XAxis;
