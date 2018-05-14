@@ -116,7 +116,7 @@ namespace TextGameEngine.Map
 
 
 
-        public static LevelDto GetLevel(string filePath, string name = null)
+        private static LevelDto GetLevel(string filePath, string name = null)
         {
             var fileLines = File.ReadAllLines(filePath);
             var customObjects = GetObjects(fileLines);
@@ -125,7 +125,7 @@ namespace TextGameEngine.Map
             return new LevelDto
             {
                 Map = GetMap(fileLines, lookup),
-                Name = name == null ? filePath.Split(Path.DirectorySeparatorChar).LastOrDefault().Replace("TGM", "") : name
+                Name = name ?? filePath.Split(Path.DirectorySeparatorChar).LastOrDefault().Replace("TGM", "")
             };
         }
 
