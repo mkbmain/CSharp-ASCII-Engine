@@ -14,3 +14,18 @@ would like to keep this format and build up in to simple graphics
 then even in to rpg maker level thought i would start from bottom and 
 work my way up though as well somthing to do since i have had to give up
 alchol and smoking lol
+
+
+todo allow custom char for built in objects will probably go with a 
+'' on var part of a level e.g
+
+var|
+w = wall '|'
+
+
+and remove this from the custom object serialize model
+
+
+also need to add health attribute to player and make enemies or traps 
+(custom oject with ability to -life) when steped on with out required item
+can also instant death this way
