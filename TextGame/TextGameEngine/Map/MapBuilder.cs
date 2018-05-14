@@ -10,7 +10,7 @@ namespace TextGameEngine.Map
 
     public class MapBuilder
     {
-        private static MapObjectBase[,] GetMap(string[] mapFileLines, Dictionary<char, MapObjectBase> lookup)
+        private static MapObjectBase[,] GetMap(IEnumerable<string> mapFileLines, IReadOnlyDictionary<char, MapObjectBase> lookup)
         {
             var mapFile = GetFileParts("map|", mapFileLines);
             var lines = mapFile.Split('\n');
@@ -36,7 +36,7 @@ namespace TextGameEngine.Map
             return outval;
         }
 
-        private static Dictionary<string, MapCustomObject> GetObjects(string[] fileLines)
+        private static Dictionary<string, MapCustomObject> GetObjects(IEnumerable<string> fileLines)
         {
             var customobjectsText = GetFileParts("ob|", fileLines);
             var customObdict = new Dictionary<string, MapCustomObject>();
@@ -51,7 +51,7 @@ namespace TextGameEngine.Map
             return customObdict;
         }
 
-        private static Dictionary<char, MapObjectBase> GetKeyLookUp(Dictionary<string, MapCustomObject> customLookup, string[] fileLines)
+        private static Dictionary<char, MapObjectBase> GetKeyLookUp(IReadOnlyDictionary<string, MapCustomObject> customLookup, IEnumerable<string> fileLines)
         {
             var customobjectsText = GetFileParts("var|", fileLines);
             var lookUp = new Dictionary<char, MapObjectBase>() { { ' ', new FloorMapObject() } };
@@ -86,7 +86,7 @@ namespace TextGameEngine.Map
         }
 
 
-        private static string GetFileParts(string startsWith, string[] mapFileLines)
+        private static string GetFileParts(string startsWith, IEnumerable<string> mapFileLines)
         {
             var output = "";
             var mapBit = false;
