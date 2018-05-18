@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using TextGameEngine.Config.Model;
-using TextGameEngine.MapObjects;
+﻿using System.Linq;
 
 namespace TextGameEngine.Config
 {
