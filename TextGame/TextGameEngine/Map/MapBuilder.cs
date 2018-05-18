@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using TextGameEngine.Config;
 using TextGameEngine.MapObjects;
 
 namespace TextGameEngine.Map
@@ -69,14 +70,14 @@ namespace TextGameEngine.Map
                 switch (ob)
                 {
                     case "wall":
-                        lookUp.Add(c, new WallObject());
+                        lookUp.Add(c, new WallObject(MapObjectDisplayChars.WallChar));
                         break;
                     case "player":
-                        lookUp.Add(c, new PlayerStartObject());
+                        lookUp.Add(c, new PlayerStartObject(MapObjectDisplayChars.PlayerChar));
                         break;
                     case "exit":
                         if(start.Length < 3) { throw new Exception("Exit setup with no goto");}
-                        lookUp.Add(c, new MapExitObject('□'){ GoToLevel = start[2].Trim()});  // TODO BIGGIE
+                        lookUp.Add(c, new MapExitObject(MapObjectDisplayChars.ExitChar) { GoToLevel = start[2].Trim()});  // TODO BIGGIE
                         break;
                     default:
                         if (customLookup.TryGetValue(ob, out var mapob)) { lookUp.Add(c, mapob); }

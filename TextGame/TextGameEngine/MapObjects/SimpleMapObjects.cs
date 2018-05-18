@@ -1,12 +1,11 @@
 ﻿namespace TextGameEngine.MapObjects
-{
-
+{ 
 
     public class MapExitObject : MapObjectBase
     {
         public override string ToString()
         {
-            return MapChar?.ToString() ?? "#";
+            return MapChar?.ToString()  ?? "#";
         }
 
         public string GoToLevel { get; set; }

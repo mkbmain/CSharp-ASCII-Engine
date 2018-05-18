@@ -10,6 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Game.load">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Map2.TGL">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

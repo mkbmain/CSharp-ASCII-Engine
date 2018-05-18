@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using TextGameEngine.Config;
 using TextGameEngine.Location;
 using TextGameEngine.MapObjects;
 using TextGameEngine.PlayerModel;
@@ -12,9 +13,10 @@ namespace TextGame
 
         static void Main()
         {
+            var firstLevelName = ConfigLoader.GetFirstMapLevelFromConfig();
             AllLevels = TextGameEngine.Map.MapBuilder.GetAllLevels().ToArray();
-
-            var level = AllLevels.FirstOrDefault();
+        
+            var level = string.IsNullOrEmpty(firstLevelName) ? AllLevels.FirstOrDefault() : AllLevels.FirstOrDefault(f=> f.Name.ToLower() == firstLevelName);
             if (level == null)
             {
                 Console.WriteLine("No Levels Detected");
