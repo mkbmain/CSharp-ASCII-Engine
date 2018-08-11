@@ -2,6 +2,7 @@ ob|
 key = {"Name":"key","Message":"You found a Key","AddItemId":1,"RequiresItemId":null,"MapChar":"¬","CanStandOn":true}
 door = {"Name":"LockedDoor","Message":"the door disapaers as you walk through","AddItemId":null,"RequiresItemId":1,"MapChar":"I","CanStandOn":true}
 
+
 var|
 █ = wall
 p = player
