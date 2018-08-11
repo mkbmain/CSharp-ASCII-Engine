@@ -60,11 +60,9 @@ namespace TextGame
                 {
                     Console.Clear();
                     Console.WriteLine($"-----");
-                    Console.WriteLine(
-                        $"|{getAroundMe.AllAround[0, 0]}{getAroundMe.AllAround[1, 0]}{getAroundMe.AllAround[2, 0]}|");
+                    Console.WriteLine($"|{getAroundMe.AllAround[0, 0]}{getAroundMe.AllAround[1, 0]}{getAroundMe.AllAround[2, 0]}|");
                     Console.WriteLine($"|{getAroundMe.AllAround[0, 1]}{player.StartOb}{getAroundMe.AllAround[2, 1]}|");
-                    Console.WriteLine(
-                        $"|{getAroundMe.AllAround[0, 2]}{getAroundMe.AllAround[1, 2]}{getAroundMe.AllAround[2, 2]}|");
+                    Console.WriteLine($"|{getAroundMe.AllAround[0, 2]}{getAroundMe.AllAround[1, 2]}{getAroundMe.AllAround[2, 2]}|");
                     Console.WriteLine($"-----");
                 }
 
