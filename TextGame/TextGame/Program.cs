@@ -15,13 +15,14 @@ namespace TextGame
         {
             var firstLevelName = ConfigLoader.GetFirstMapLevelFromConfig();
             AllLevels = TextGameEngine.Map.MapBuilder.GetAllLevels().ToArray();
-        
-            var level = string.IsNullOrEmpty(firstLevelName) ? AllLevels.FirstOrDefault() : AllLevels.FirstOrDefault(f=> f.Name.ToLower() == firstLevelName);
+
+            var level = string.IsNullOrEmpty(firstLevelName) ? AllLevels.FirstOrDefault() : AllLevels.FirstOrDefault(f => f.Name.ToLower() == firstLevelName);
             if (level == null)
             {
                 Console.WriteLine("No Levels Detected");
                 return;
             }
+
             var map = level.Map;
 
             // from this point on player pos is here and not in map 
@@ -104,8 +105,8 @@ namespace TextGame
                 switch (input)
                 {
                     case "exit":
-                       Environment.Exit(1);
-                        break;    
+                        Environment.Exit(1);
+                        break;
                     case "up":
                     case "u":
                         moveToPoint = getAroundMe.Up;
