@@ -5,7 +5,7 @@ using TextGameEngine.MapObjects;
 
 namespace TextGameEngine.Location
 {
-    public class LocationHelper
+    public static class LocationHelper
     {
         private static IEnumerable<Positon> GetObjectFromMapBase<T>(MapObjectBase[,] map, bool all = true) where T : MapObjectBase
         {
