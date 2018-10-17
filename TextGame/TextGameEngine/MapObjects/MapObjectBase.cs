@@ -9,6 +9,5 @@
 
         protected char? MapChar { get; set; }
         public bool CanStandOn { get; protected set; }
-
     }
 }
