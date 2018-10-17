@@ -9,7 +9,7 @@ namespace TextGame
 {
     internal static class Program
     {
-        static LevelModel[] AllLevels { get; set; }
+        private static LevelModel[] AllLevels { get; set; }
 
         static void Main()
         {
@@ -53,7 +53,7 @@ namespace TextGame
 
             var input = "";
             var clear = true;
-            while (input.ToLower() != "exit")
+            while (input?.ToLower() != "exit")
             {
                 var getAroundMe = LocationHelper.GetWhatsAroundPosition(playerPos, map);
 
@@ -69,15 +69,15 @@ namespace TextGame
 
                 if (getAroundMe.AllAround[1, 1].GetType() == typeof(MapCustomObject))
                 {
-                    var customob = (MapCustomObject) getAroundMe.AllAround[1, 1];
-                    if (!string.IsNullOrWhiteSpace(customob.Message))
+                    var mapCustomObject = (MapCustomObject) getAroundMe.AllAround[1, 1];
+                    if (!string.IsNullOrWhiteSpace(mapCustomObject.Message))
                     {
-                        Console.WriteLine(customob.Message);
+                        Console.WriteLine(mapCustomObject.Message);
                     }
 
-                    if (customob.AddItemId != null)
+                    if (mapCustomObject.AddItemId != null)
                     {
-                        player.Inventory.Add(new InventoryItem {Id = (int) customob.AddItemId, Name = customob.Name});
+                        player.Inventory.Add(new InventoryItem {Id = (int) mapCustomObject.AddItemId, Name = mapCustomObject.Name});
                     }
 
                     level.Map[playerPos.XAxis, playerPos.YAxis] = new FloorMapObject();
@@ -85,9 +85,9 @@ namespace TextGame
 
                 if (getAroundMe.AllAround[1, 1].GetType() == typeof(MapExitObject))
                 {
-                    var customob = (MapExitObject) getAroundMe.AllAround[1, 1];
+                    var mapExitObject = (MapExitObject) getAroundMe.AllAround[1, 1];
 
-                    return customob.GoToLevel;
+                    return mapExitObject.GoToLevel;
                 }
 
                 level.LastPlayerPos.XAxis = playerPos.XAxis;
