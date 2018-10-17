@@ -1,6 +1,6 @@
 ﻿namespace TextGameEngine.MapObjects
 {
-    public class MapObjectBase
+    public abstract class MapObjectBase
     {
         protected MapObjectBase(char? customMapchar)
         {

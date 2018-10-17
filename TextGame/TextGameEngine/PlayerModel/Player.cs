@@ -3,9 +3,6 @@ using TextGameEngine.MapObjects;
 
 namespace TextGameEngine.PlayerModel
 {
-    /// <summary>
-    /// Player object might need to add live and stats
-    /// </summary>
     public class Player
     {
         public PlayerStartObject StartOb { get; set; }

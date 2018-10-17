@@ -17,7 +17,9 @@ namespace TextGameEngine.IO
 
         public static string[] GetConfigLines(string path = "")
         {
-            var file = Directory.GetFiles(string.IsNullOrWhiteSpace(path) ? Environment.CurrentDirectory : path).FirstOrDefault(f => f.EndsWith(".load"));
+            var file = Directory.GetFiles(string.IsNullOrWhiteSpace(path) 
+                                          ? Environment.CurrentDirectory 
+                                          : path).FirstOrDefault(f => f.EndsWith(".load"));
             return string.IsNullOrEmpty(file) ? new string[0] : File.ReadAllLines(file);
         }
     }
