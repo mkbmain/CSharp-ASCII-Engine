@@ -19,9 +19,7 @@ alchol and smoking lol
 todo allow custom char for built in objects will probably go with a 
 '' on var part of a level e.g
 
-var|
-w = wall '|'
-
+please see Game.load and .tgl files
 
 and remove this from the custom object serialize model
 
