@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using TextGameEngine.Extensions;
+﻿using TextGameEngine.Extensions;
 
 namespace TextGameEngine.Config
 {
