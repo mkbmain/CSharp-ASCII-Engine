@@ -3,7 +3,7 @@ using TextGameEngine.Extensions;
 
 namespace TextGameEngine.Config
 {
-    public class ConfigLoader
+    public static class ConfigLoader
     {
         public static string GetFirstMapLevelFromConfig()
         {
