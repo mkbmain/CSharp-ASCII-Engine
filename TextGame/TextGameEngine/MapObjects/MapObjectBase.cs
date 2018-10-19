@@ -7,7 +7,9 @@
             MapChar = customMapchar;
         }
 
-        protected char? MapChar { get; set; }
+        // needs to be public used in json and mapping
+        // ReSharper disable once MemberCanBeProtected.Global
+        public char? MapChar { get; set; }
         public bool CanStandOn { get; protected set; }
     }
 }

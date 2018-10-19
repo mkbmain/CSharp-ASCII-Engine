@@ -1,6 +1,5 @@
-wall =█
-player =º
-exit =□ 
+█=wall
+º = player 
+□ = exit  
 
-
-Load = Map1.TGL
+Map1.TGL =Load 
