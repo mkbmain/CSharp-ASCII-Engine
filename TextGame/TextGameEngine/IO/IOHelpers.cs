@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TextGameEngine.IO
 {
-    public class IOHelpers
+    public static class IOHelpers
     {
         public static Dictionary<string, string> GetMapFiles(string path = "")
         {
@@ -15,7 +15,7 @@ namespace TextGameEngine.IO
                  .ToDictionary(f => f.Replace(Environment.CurrentDirectory, "").Substring(1), f => f);
         }
 
-        public static string[] GetConfigLines(string path = "")
+        public static IEnumerable<string> GetConfigLines(string path = "")
         {
             var file = Directory.GetFiles(string.IsNullOrWhiteSpace(path) 
                                           ? Environment.CurrentDirectory 

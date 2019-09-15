@@ -9,7 +9,7 @@ using TextGameEngine.MapObjects;
 namespace TextGameEngine.Map
 {
     /// <summary>
-    /// Map builder this is incharge of getting and mapping map and vars from tgl files
+    /// Map builder this is in charge of getting and mapping map and vars from tgl files
     /// </summary>
     public static class MapBuilder
     {
@@ -104,13 +104,7 @@ namespace TextGameEngine.Map
 
         public static IEnumerable<LevelModel> GetAllLevels(string path = null)
         {
-            var allMap = IO.IOHelpers.GetMapFiles(path);
-            var list = new List<LevelModel>();
-            foreach (var f in allMap)
-            {
-                list.Add(GetLevel(f.Value, f.Key));
-            }
-            return list;
+            return IO.IOHelpers.GetMapFiles(path).Select(f => GetLevel(f.Value, f.Key)).ToList();
         }
 
         private static LevelModel GetLevel(string filePath, string name = null)
