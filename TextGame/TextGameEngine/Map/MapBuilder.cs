@@ -18,23 +18,20 @@ namespace TextGameEngine.Map
             var mapFile = GetFileParts("map|", mapFileLines);
             var lines = mapFile.Split('\n');
             var height = lines.Length;
-            var maxWidth = lines.Select(x=>x.Length).OrderByDescending(x => x).FirstOrDefault();
+            var maxWidth = lines.Select(x => x.Length).OrderByDescending(x => x).FirstOrDefault();
 
             var outval = new MapObjectBase[maxWidth, height];
-            var yAxis = 0;
-
-            foreach (var line in lines)
+            for (int yAxis = 0; yAxis < lines.Length; yAxis++)
             {
-                var xAxis = 0;
-                foreach (var i in line)
+                for (int xAxis = 0; xAxis < lines[yAxis].Length; xAxis++)
                 {
-                    if (!lookup.TryGetValue(i, out var ob)) { continue; }
-                    outval[xAxis, yAxis] = ob;
-                    xAxis++;
+                    if (lookup.TryGetValue(lines[yAxis][xAxis], out var ob))
+                    {
+                        outval[xAxis, yAxis] = ob;
+                    }
                 }
-
-                yAxis++;
             }
+
             return outval;
         }
 
@@ -44,7 +41,11 @@ namespace TextGameEngine.Map
             var customObdict = new Dictionary<string, MapCustomObject>();
             foreach (var line in customobjectsText.Split('\n'))
             {
-                if (string.IsNullOrWhiteSpace(line)) { continue; }
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+
                 var start = line.Split('=');
                 var customob = JsonConvert.DeserializeObject<MapCustomObject>(start[1]);
                 customObdict.Add(start[0].Trim(), customob);
@@ -53,10 +54,11 @@ namespace TextGameEngine.Map
             return customObdict;
         }
 
-        private static Dictionary<char, MapObjectBase> GetKeyLookUp(IReadOnlyDictionary<string, MapCustomObject> customLookup, IEnumerable<string> fileLines)
+        private static Dictionary<char, MapObjectBase> GetMapObjectLookUp(IReadOnlyDictionary<string, MapCustomObject> customLookup,
+            IEnumerable<string> fileLines)
         {
             var customobjectsText = GetFileParts("var|", fileLines);
-            var lookUp = new Dictionary<char, MapObjectBase>() { { ' ', new FloorMapObject() } };
+            var lookUp = new Dictionary<char, MapObjectBase>() {{' ', new FloorMapObject()}};
             foreach (var line in customobjectsText.Split('\n'))
             {
                 if (string.IsNullOrWhiteSpace(line)) { continue;}
@@ -95,9 +97,14 @@ namespace TextGameEngine.Map
             {
                 if (string.IsNullOrWhiteSpace(line)) { continue; }
                 if (mapBit == false && !line.StartsWith(startsWith)) { continue; }
-                if (line.StartsWith(startsWith)) { mapBit = true; continue; }
+                if (line.StartsWith(startsWith))
+                {
+                    mapBit = true;
+                    continue;
+                }
+                
                 if (line.Contains('|')) { return output; }
-                output += $"{line.ToLower()}{Environment.NewLine}";
+                output += $"{line}{Environment.NewLine}";
             }
             return output;
         }
@@ -111,7 +118,7 @@ namespace TextGameEngine.Map
         {
             var fileLines = File.ReadAllLines(filePath);
             var customObjects = GetObjects(fileLines);
-            var lookup = GetKeyLookUp(customObjects, fileLines);
+            var lookup = GetMapObjectLookUp(customObjects, fileLines);
 
             return new LevelModel
             {

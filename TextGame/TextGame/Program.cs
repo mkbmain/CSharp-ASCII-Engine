@@ -34,7 +34,7 @@ namespace TextGame
             while (true)
             {
                 var next = PlayGame(level, player);
-                level = AllLevels.FirstOrDefault(f => f.Name.ToLower() == next);
+                level = AllLevels.FirstOrDefault(f => string.Equals(f.Name, next, StringComparison.CurrentCultureIgnoreCase));
             }
         }
 

@@ -7,6 +7,9 @@ namespace TextGameEngine.IO
 {
     public static class IOHelpers
     {
+        /// <summary>
+        ///  returns file path with file name in dictionary format. only gets tgl files 
+        /// </summary>
         public static Dictionary<string, string> GetMapFiles(string path = "")
         {
 
