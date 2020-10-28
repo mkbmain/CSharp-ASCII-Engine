@@ -27,3 +27,5 @@ and remove this from the custom object serialize model
 also need to add health attribute to player and make enemies or traps 
 (custom oject with ability to -life) when steped on with out required item
 can also instant death this way
+
+maybe more to come soon
